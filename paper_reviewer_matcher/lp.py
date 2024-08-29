@@ -64,11 +64,11 @@ def test_example():
         x >= 0 -> -x <= 0
         y >= 0 -> -y <= 0
     """
-    f = np.array([50, 40], dtype=np.float)
+    f = np.array([50, 40], dtype=float)
     A = np.array([[ 2, 3],
                   [ 2, 1],
                   [-1, 0],
-                  [ 0, -1]], dtype=np.float)
+                  [ 0, -1]], dtype=float)
     C = np.array([1500, 1000, 0, 0])
     x_sol = linprog(f, coo_matrix(A), C)
     print('Example Problem:')

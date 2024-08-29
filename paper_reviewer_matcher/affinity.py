@@ -63,7 +63,7 @@ def compute_topics(
         X_topic = topic_model.fit_transform(X)
     elif projection == 'pca':
         topic_model = PCA(n_components=n_components)
-        X_topic = topic_model.fit_transform(X.todense())
+        X_topic = topic_model.fit_transform(X.toarray())
     else:
         print("select projection from ['svd', 'pca']")
     return X_topic
@@ -162,14 +162,14 @@ def create_lp_matrix(A, min_reviewers_per_paper=0, max_reviewers_per_paper=10,
     i, j = A.nonzero()
     v = A[i, j]
 
-    N_e = sp.dok_matrix((n_papers + n_reviewers, n_edges), dtype=np.float)
+    N_e = sp.dok_matrix((n_papers + n_reviewers, n_edges), dtype=float)
     N_e[i, range(n_edges)] = 1
     N_e[j + n_papers, range(n_edges)] = 1
 
-    N_p = sp.dok_matrix((n_papers, n_edges), dtype=np.int)
+    N_p = sp.dok_matrix((n_papers, n_edges), dtype=int)
     N_p[i, range(n_edges)] = -1
 
-    N_r = sp.dok_matrix((n_reviewers, n_edges), dtype=np.int)
+    N_r = sp.dok_matrix((n_reviewers, n_edges), dtype=int)
     N_r[j, range(n_edges)] = -1
 
     K = sp.vstack([N_e, N_p, N_r, sp.identity(n_edges), -sp.identity(n_edges)])
